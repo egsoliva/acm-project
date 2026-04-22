@@ -46,7 +46,7 @@ class Wordle:
             else:
                 self._board[row][i] = f"[white on bright_black] {guess[i]} "
 
-    def run(self):
+    def play(self):
         console.print("[bold cyan]Welcome to Wordle!")
 
         for attempt in range(self._tries):
@@ -62,3 +62,7 @@ class Wordle:
 
         self.display_board()
         console.print(f"[bold red]Game over! The word was {self._word}")
+
+if __name__ == "__main__":
+    wordle = Wordle()
+    wordle.play()
