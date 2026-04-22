@@ -57,6 +57,7 @@ class Wordle:
             elif guess[i] in word:
                 temp = guess[i]
                 if dict_word[temp] > 0:
+                    dict_word[temp] -= 1
                     self._board[row][i] = f"[white on gold3] {guess[i]} "
                 else:
                     self._board[row][i] = f"[white on bright_black] {guess[i]} "
