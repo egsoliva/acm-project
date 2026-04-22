@@ -1,7 +1,7 @@
 from rich.console import Console
 from rich.prompt import Prompt
 from random import choice
-from os import system, name
+import os
 
 console = Console()
 
@@ -73,11 +73,11 @@ class Wordle:
             self.check_word(guess, attempt)
 
             if guess == self._word:
-                system("cls" if name == "nt" else "clear")
+                os.system("cls" if os.name == "nt" else "clear")
                 self.display_board()
                 console.print("[bold green]You win!")
                 return
-        system("cls" if name == "nt" else "clear")
+        os.system("cls" if os.name == "nt" else "clear")
         self.display_board()
         console.print(f"[bold red]Game over! The word was {self._word}")
 
