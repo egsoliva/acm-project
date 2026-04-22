@@ -1,6 +1,7 @@
 from rich.console import Console
 from rich.prompt import Prompt
 from random import choice
+from os import system, name
 
 console = Console()
 
@@ -37,29 +38,46 @@ class Wordle:
 
     def check_word(self, guess: str, row: int):
         word = self._word
+        dict_word = {i:0 for i in word}
+        
+        for i in word:
+            dict_word[i] += 1
 
+        # Prioritize first the correct placements
         for i in range(5):
             if guess[i] == word[i]:
+                temp = guess[i]
+                dict_word[temp] -= 1
                 self._board[row][i] = f"[white on green3] {guess[i]} "
+
+        # Check for any wrong placements
+        for i in range(5):
+            if guess[i] == word[i]:
+                pass
             elif guess[i] in word:
-                self._board[row][i] = f"[white on gold3] {guess[i]} "
+                temp = guess[i]
+                if dict_word[temp] > 0:
+                    self._board[row][i] = f"[white on gold3] {guess[i]} "
+                else:
+                    self._board[row][i] = f"[white on bright_black] {guess[i]} "
             else:
                 self._board[row][i] = f"[white on bright_black] {guess[i]} "
+        
 
     def play(self):
-        console.print("[bold cyan]Welcome to Wordle!")
-
         for attempt in range(self._tries):
+            system("cls")
             self.display_board()
             guess = self.get_guess()
 
             self.check_word(guess, attempt)
 
             if guess == self._word:
+                system("cls" if name == "nt" else "clear")
                 self.display_board()
                 console.print("[bold green]You win!")
                 return
-
+        system("cls" if name == "nt" else "clear")
         self.display_board()
         console.print(f"[bold red]Game over! The word was {self._word}")
 
