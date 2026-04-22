@@ -35,7 +35,13 @@ class Hangman:
 
 
     def pick_word(self) -> str:
-        return "spore".upper()
+        arr: list[str] = []
+        with open("words.txt", "r") as words:
+            for word in words:
+                word = word.strip().upper()
+                arr.append(word)
+
+        return arr[randint(0, len(arr) - 1)]
 
 
     def make_guess(self, guess: str) -> bool:
